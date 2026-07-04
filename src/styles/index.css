@@ -1,0 +1,551 @@
+/* ---------- Tokens de diseño ---------- */
+:root {
+  --page: #f9f9f7;
+  --surface-1: #fcfcfb;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+  --hairline: #e1e0d9;
+  --border: rgba(11, 11, 11, 0.1);
+  --accent: #2a78d6;
+  --accent-strong: #1c5cab;
+  --accent-wash: rgba(42, 120, 214, 0.1);
+  --status-done: #006300;
+  --status-done-wash: rgba(12, 163, 12, 0.12);
+  --status-paused: #8a5a00;
+  --status-paused-wash: rgba(250, 178, 25, 0.16);
+  --shadow: 0 1px 2px rgba(11, 11, 11, 0.05), 0 8px 24px rgba(11, 11, 11, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --hairline: #2c2c2a;
+    --border: rgba(255, 255, 255, 0.1);
+    --accent: #3987e5;
+    --accent-strong: #6da7ec;
+    --accent-wash: rgba(57, 135, 229, 0.18);
+    --status-done: #0ca30c;
+    --status-done-wash: rgba(12, 163, 12, 0.16);
+    --status-paused: #fab219;
+    --status-paused-wash: rgba(250, 178, 25, 0.14);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.45);
+  }
+}
+
+/* ---------- Base ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Header ---------- */
+.header {
+  background: var(--surface-1);
+  border-bottom: 1px solid var(--hairline);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  height: 64px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.brand-logo {
+  width: 32px;
+  height: 32px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.brand-text strong {
+  font-size: 17px;
+  letter-spacing: 0.04em;
+}
+
+.brand-sub {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.header-nav {
+  display: flex;
+  gap: 4px;
+}
+
+.nav-item {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.nav-item--active {
+  background: var(--accent-wash);
+  color: var(--accent-strong);
+  font-weight: 600;
+}
+
+.nav-item--disabled {
+  color: var(--text-muted);
+  cursor: default;
+}
+
+/* ---------- Intro ---------- */
+.intro {
+  padding: 40px 0 8px;
+}
+
+.intro h1 {
+  margin: 0 0 8px;
+  font-size: 26px;
+  line-height: 1.25;
+}
+
+.intro p {
+  margin: 0;
+  max-width: 640px;
+  color: var(--text-secondary);
+}
+
+/* ---------- Stat tiles ---------- */
+.stat-tiles {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.stat-tile {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+.stat-unit {
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* ---------- Tabla de proyectos ---------- */
+.projects {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+
+.projects-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: 18px 20px 12px;
+}
+
+.projects-header h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.projects-count {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.projects-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.projects-table th {
+  text-align: left;
+  padding: 10px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.projects-table td {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--hairline);
+  vertical-align: top;
+}
+
+.projects-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.projects-table tbody tr:hover {
+  background: var(--accent-wash);
+}
+
+.project-name {
+  font-weight: 600;
+}
+
+.project-company {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.project-location {
+  color: var(--text-secondary);
+}
+
+.cell-action {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* ---------- Badges ---------- */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.status-icon {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.status--progress {
+  background: var(--accent-wash);
+  color: var(--accent-strong);
+}
+
+.status--paused {
+  background: var(--status-paused-wash);
+  color: var(--status-paused);
+}
+
+.status--done {
+  background: var(--status-done-wash);
+  color: var(--status-done);
+}
+
+.phase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.phase-dots {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.phase-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--hairline);
+}
+
+.phase-dot--filled {
+  background: var(--accent);
+}
+
+/* ---------- Botones ---------- */
+.btn-details {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface-1);
+  color: var(--accent-strong);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-details:hover {
+  background: var(--accent-wash);
+  border-color: var(--accent);
+}
+
+.btn-details:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Tarjetas (móvil) ---------- */
+.project-cards {
+  display: none;
+  list-style: none;
+  margin: 0;
+  padding: 0 16px 16px;
+}
+
+.project-card {
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.project-card + .project-card {
+  margin-top: 10px;
+}
+
+.project-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.project-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 719px) {
+  .table-wrapper {
+    display: none;
+  }
+
+  .project-cards {
+    display: block;
+  }
+
+  .stat-tiles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .intro {
+    padding-top: 28px;
+  }
+
+  .intro h1 {
+    font-size: 22px;
+  }
+
+  .header-nav {
+    display: none;
+  }
+}
+
+/* ---------- Modal ---------- */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 11, 11, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+}
+
+.modal {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.modal-id {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.modal-header h3 {
+  margin: 2px 0 2px;
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+.modal-company {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.btn-close {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 16px;
+  line-height: 1;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.btn-close:hover {
+  background: var(--accent-wash);
+  color: var(--text-primary);
+}
+
+.btn-close:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.modal-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 14px 0 18px;
+}
+
+.modal-facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin: 0;
+  padding: 16px 0;
+  border-top: 1px solid var(--hairline);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.fact dt {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.fact dd {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.modal-description h4 {
+  margin: 16px 0 6px;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.modal-description p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 479px) {
+  .modal-facts {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- Footer ---------- */
+.footer {
+  margin-top: auto;
+  border-top: 1px solid var(--hairline);
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
