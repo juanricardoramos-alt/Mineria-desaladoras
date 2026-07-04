@@ -1,4 +1,4 @@
-import { StatusBadge, PhaseBadge } from './badges.jsx'
+import { SectorBadge, PhaseBadge } from './badges.jsx'
 import EmptyState from './EmptyState.jsx'
 
 const formatBudget = new Intl.NumberFormat('es-CL')
@@ -35,9 +35,9 @@ export default function ProjectsTable({ projects, onSelect, onClearFilters }) {
             <tr>
               <th scope="col">Nombre</th>
               <th scope="col">Empresa</th>
-              <th scope="col">Ubicación</th>
               <th scope="col">Fase</th>
-              <th scope="col">Estado</th>
+              <th scope="col">Ubicación</th>
+              <th scope="col">Sector</th>
               <th scope="col" className="cell-budget">
                 Presupuesto (millones USD)
               </th>
@@ -51,12 +51,12 @@ export default function ProjectsTable({ projects, onSelect, onClearFilters }) {
               <tr key={project.id}>
                 <td className="project-name">{project.nombre}</td>
                 <td className="project-company">{project.empresa}</td>
-                <td className="project-location">{project.ubicacion}</td>
                 <td>
                   <PhaseBadge fase={project.fase} />
                 </td>
+                <td className="project-location">{project.ubicacion}</td>
                 <td>
-                  <StatusBadge estado={project.estado} />
+                  <SectorBadge sector={project.sector} />
                 </td>
                 <td className="cell-budget project-budget">
                   {formatPresupuesto(project.presupuesto)}
@@ -85,7 +85,7 @@ export default function ProjectsTable({ projects, onSelect, onClearFilters }) {
                 <div className="project-name">{project.nombre}</div>
                 <div className="project-company">{project.empresa}</div>
               </div>
-              <StatusBadge estado={project.estado} />
+              <SectorBadge sector={project.sector} />
             </div>
             <div className="project-location">{project.ubicacion}</div>
             <div className="project-card-budget">

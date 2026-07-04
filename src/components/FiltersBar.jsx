@@ -1,9 +1,10 @@
-import { FASES, ESTADOS } from '../data/projects.js'
+import { FASES, SECTORES } from '../data/projects.js'
 
-const ESTADO_ICON = {
-  'En progreso': '●',
-  Pausado: '⏸',
-  Completado: '✓',
+const SECTOR_DOT_CLASS = {
+  Minería: 'sector--mineria',
+  Industria: 'sector--industria',
+  Energía: 'sector--energia',
+  Agua: 'sector--agua',
 }
 
 export default function FiltersBar({
@@ -11,14 +12,14 @@ export default function FiltersBar({
   onSearchChange,
   selectedFases,
   onToggleFase,
-  selectedEstados,
-  onToggleEstado,
+  selectedSectores,
+  onToggleSector,
   onClear,
   resultCount,
   totalCount,
 }) {
   const hasActiveFilters =
-    search.trim() !== '' || selectedFases.size > 0 || selectedEstados.size > 0
+    search.trim() !== '' || selectedFases.size > 0 || selectedSectores.size > 0
 
   return (
     <section className="filters-bar" aria-label="Filtros de proyectos">
@@ -97,24 +98,25 @@ export default function FiltersBar({
         </div>
 
         <div className="filter-group">
-          <span className="filter-group-label">Estado</span>
+          <span className="filter-group-label">Sector</span>
           <div
             className="chip-group"
             role="group"
-            aria-label="Filtrar por estado"
+            aria-label="Filtrar por sector"
           >
-            {ESTADOS.map((estado) => (
+            {SECTORES.map((sector) => (
               <button
-                key={estado}
+                key={sector}
                 type="button"
-                className={`chip ${selectedEstados.has(estado) ? 'chip--active' : ''}`}
-                aria-pressed={selectedEstados.has(estado)}
-                onClick={() => onToggleEstado(estado)}
+                className={`chip ${selectedSectores.has(sector) ? 'chip--active' : ''}`}
+                aria-pressed={selectedSectores.has(sector)}
+                onClick={() => onToggleSector(sector)}
               >
-                <span className="chip-icon" aria-hidden="true">
-                  {ESTADO_ICON[estado]}
-                </span>
-                {estado}
+                <span
+                  className={`chip-sector-dot ${SECTOR_DOT_CLASS[sector]}`}
+                  aria-hidden="true"
+                />
+                {sector}
               </button>
             ))}
           </div>

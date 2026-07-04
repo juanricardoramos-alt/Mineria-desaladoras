@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ESTADOS } from '../../data/projects.js'
+import { SECTORES } from '../../data/projects.js'
 import ChartCard from './ChartCard.jsx'
 
 const SIZE = 240
@@ -9,21 +9,22 @@ const STROKE = 32
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS
 const GAP = 5
 
-const ESTADO_META = {
-  'En progreso': { icon: '●', className: 'estado-fill-progreso' },
-  Pausado: { icon: '⏸', className: 'estado-fill-pausado' },
-  Completado: { icon: '✓', className: 'estado-fill-completado' },
+const SECTOR_META = {
+  Minería: { className: 'donut-fill-mineria' },
+  Industria: { className: 'donut-fill-industria' },
+  Energía: { className: 'donut-fill-energia' },
+  Agua: { className: 'donut-fill-agua' },
 }
 
 export default function DonutChart({ projects }) {
   const [hovered, setHovered] = useState(null)
   const total = projects.length
-  const counts = ESTADOS.map(
-    (estado) => projects.filter((p) => p.estado === estado).length,
+  const counts = SECTORES.map(
+    (sector) => projects.filter((p) => p.sector === sector).length,
   )
 
   let cumulative = 0
-  const segments = ESTADOS.map((estado, i) => {
+  const segments = SECTORES.map((sector, i) => {
     const count = counts[i]
     const fraction = total > 0 ? count / total : 0
     const length = fraction * CIRCUMFERENCE
@@ -32,23 +33,23 @@ export default function DonutChart({ projects }) {
     const dashOffset = -cumulative
     cumulative += length
     const pct = total > 0 ? Math.round(fraction * 100) : 0
-    return { estado, count, pct, dashArray, dashOffset, ...ESTADO_META[estado] }
+    return { sector, count, pct, dashArray, dashOffset, ...SECTOR_META[sector] }
   })
 
   const table = (
     <table className="chart-table">
-      <caption className="visually-hidden">Proyectos por estado</caption>
+      <caption className="visually-hidden">Proyectos por sector</caption>
       <thead>
         <tr>
-          <th scope="col">Estado</th>
+          <th scope="col">Sector</th>
           <th scope="col">Proyectos</th>
           <th scope="col">Porcentaje</th>
         </tr>
       </thead>
       <tbody>
         {segments.map((s) => (
-          <tr key={s.estado}>
-            <td>{s.estado}</td>
+          <tr key={s.sector}>
+            <td>{s.sector}</td>
             <td>{s.count}</td>
             <td>{s.pct}%</td>
           </tr>
@@ -59,8 +60,8 @@ export default function DonutChart({ projects }) {
 
   return (
     <ChartCard
-      title="Proyectos por estado"
-      caption="Participación de cada estado en el catastro filtrado"
+      title="Proyectos por sector"
+      caption="Participación de cada sector en el catastro filtrado"
       table={table}
     >
       <div className="donut-layout">
@@ -68,8 +69,8 @@ export default function DonutChart({ projects }) {
           className="donut-chart"
           viewBox={`0 0 ${SIZE} ${SIZE}`}
           role="img"
-          aria-label={`Proyectos por estado: ${segments
-            .map((s) => `${s.estado}, ${s.count} (${s.pct}%)`)
+          aria-label={`Proyectos por sector: ${segments
+            .map((s) => `${s.sector}, ${s.count} (${s.pct}%)`)
             .join('; ')}`}
         >
           <circle
@@ -84,7 +85,7 @@ export default function DonutChart({ projects }) {
             {segments
               .filter((s) => s.count > 0)
               .map((s) => (
-                <g key={s.estado}>
+                <g key={s.sector}>
                   <circle
                     cx={CENTER}
                     cy={CENTER}
@@ -94,9 +95,9 @@ export default function DonutChart({ projects }) {
                     strokeDasharray={s.dashArray}
                     strokeDashoffset={s.dashOffset}
                     className="donut-hit"
-                    onPointerEnter={() => setHovered(s.estado)}
+                    onPointerEnter={() => setHovered(s.sector)}
                     onPointerLeave={() => setHovered(null)}
-                    onFocus={() => setHovered(s.estado)}
+                    onFocus={() => setHovered(s.sector)}
                     onBlur={() => setHovered(null)}
                     tabIndex={0}
                   />
@@ -110,7 +111,7 @@ export default function DonutChart({ projects }) {
                     strokeDasharray={s.dashArray}
                     strokeDashoffset={s.dashOffset}
                     className={`donut-segment ${s.className}`}
-                    opacity={hovered && hovered !== s.estado ? 0.45 : 1}
+                    opacity={hovered && hovered !== s.sector ? 0.45 : 1}
                   />
                 </g>
               ))}
@@ -126,15 +127,13 @@ export default function DonutChart({ projects }) {
         <ul className="donut-legend">
           {segments.map((s) => (
             <li
-              key={s.estado}
-              className={`legend-row ${hovered === s.estado ? 'legend-row--active' : ''}`}
-              onPointerEnter={() => setHovered(s.estado)}
+              key={s.sector}
+              className={`legend-row ${hovered === s.sector ? 'legend-row--active' : ''}`}
+              onPointerEnter={() => setHovered(s.sector)}
               onPointerLeave={() => setHovered(null)}
             >
-              <span className={`legend-dot ${s.className}`} aria-hidden="true">
-                {s.icon}
-              </span>
-              <span className="legend-label">{s.estado}</span>
+              <span className={`legend-dot ${s.className}`} aria-hidden="true" />
+              <span className="legend-label">{s.sector}</span>
               <span className="legend-value">
                 {s.count} · {s.pct}%
               </span>
