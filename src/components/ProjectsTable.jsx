@@ -1,6 +1,19 @@
 import { StatusBadge, PhaseBadge } from './badges.jsx'
+import EmptyState from './EmptyState.jsx'
 
-export default function ProjectsTable({ projects, onSelect }) {
+export default function ProjectsTable({ projects, onSelect, onClearFilters }) {
+  if (projects.length === 0) {
+    return (
+      <section className="projects" aria-label="Listado de proyectos">
+        <div className="projects-header">
+          <h2>Proyectos</h2>
+          <span className="projects-count">0 registros</span>
+        </div>
+        <EmptyState onClear={onClearFilters} />
+      </section>
+    )
+  }
+
   return (
     <section className="projects" aria-label="Listado de proyectos">
       <div className="projects-header">
