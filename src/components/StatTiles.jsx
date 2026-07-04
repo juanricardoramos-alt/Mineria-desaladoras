@@ -4,18 +4,19 @@ export default function StatTiles({ projects }) {
   const total = projects.length
   const enProgreso = projects.filter((p) => p.estado === 'En progreso').length
   const operativos = projects.filter((p) => p.fase === 'Operativo').length
-  const capacidadOperativa = projects
-    .filter((p) => p.fase === 'Operativo')
-    .reduce((sum, p) => sum + p.capacidadLs, 0)
+  const inversionTotal = projects.reduce(
+    (sum, p) => sum + (Number(p.presupuesto) || 0),
+    0,
+  )
 
   const tiles = [
     { label: 'Proyectos catastrados', value: total },
     { label: 'En progreso', value: enProgreso },
     { label: 'Plantas operativas', value: operativos },
     {
-      label: 'Capacidad operativa',
-      value: formatNumber.format(capacidadOperativa),
-      unit: 'l/s',
+      label: 'Inversión total',
+      value: `US$ ${formatNumber.format(inversionTotal)}`,
+      unit: 'millones',
     },
   ]
 

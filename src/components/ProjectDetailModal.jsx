@@ -2,6 +2,17 @@ import { useEffect, useRef } from 'react'
 import { StatusBadge, PhaseBadge } from './badges.jsx'
 
 const formatNumber = new Intl.NumberFormat('es-CL')
+const formatDate = new Intl.DateTimeFormat('es-CL', { dateStyle: 'long' })
+
+function formatPresupuesto(presupuesto) {
+  if (presupuesto === null || presupuesto === undefined) return 'No definido'
+  return `US$ ${formatNumber.format(presupuesto)} millones`
+}
+
+function formatFecha(fechaCreacion) {
+  if (!fechaCreacion) return '—'
+  return formatDate.format(new Date(fechaCreacion))
+}
 
 export default function ProjectDetailModal({ project, onClose }) {
   const closeButtonRef = useRef(null)
@@ -30,7 +41,7 @@ export default function ProjectDetailModal({ project, onClose }) {
       >
         <div className="modal-header">
           <div>
-            <span className="modal-id">{project.id}</span>
+            <span className="modal-id">Proyecto N.º {project.id}</span>
             <h3 id="modal-title">{project.nombre}</h3>
             <p className="modal-company">{project.empresa}</p>
           </div>
@@ -56,23 +67,21 @@ export default function ProjectDetailModal({ project, onClose }) {
             <dd>{project.ubicacion}</dd>
           </div>
           <div className="fact">
-            <dt>Capacidad de diseño</dt>
-            <dd>{formatNumber.format(project.capacidadLs)} l/s</dd>
+            <dt>Presupuesto</dt>
+            <dd>{formatPresupuesto(project.presupuesto)}</dd>
           </div>
           <div className="fact">
-            <dt>Inversión estimada</dt>
-            <dd>US$ {formatNumber.format(project.inversionMusd)} millones</dd>
-          </div>
-          <div className="fact">
-            <dt>Puesta en marcha</dt>
-            <dd>{project.puestaEnMarcha}</dd>
+            <dt>Registrado el</dt>
+            <dd>{formatFecha(project.fecha_creacion)}</dd>
           </div>
         </dl>
 
-        <div className="modal-description">
-          <h4>Descripción</h4>
-          <p>{project.descripcion}</p>
-        </div>
+        {project.descripcion && (
+          <div className="modal-description">
+            <h4>Descripción</h4>
+            <p>{project.descripcion}</p>
+          </div>
+        )}
       </div>
     </div>
   )

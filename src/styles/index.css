@@ -213,6 +213,33 @@ body {
   color: var(--text-muted);
 }
 
+/* ---------- Estados de carga / error de la API ---------- */
+.status-panel {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 24px;
+  margin: 20px 0;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.status-panel--error {
+  border-color: rgba(208, 59, 59, 0.35);
+}
+
+.status-panel-title {
+  margin: 0 0 6px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.status-panel-hint {
+  margin: 0 0 16px;
+  font-size: 13px;
+}
+
 /* ---------- Filtros ---------- */
 .filters-bar {
   background: var(--surface-1);
@@ -996,6 +1023,10 @@ body {
   padding: 16px 0;
   border-top: 1px solid var(--hairline);
   border-bottom: 1px solid var(--hairline);
+}
+
+.modal-facts .fact:nth-child(3) {
+  grid-column: 1 / -1;
 }
 
 .fact dt {

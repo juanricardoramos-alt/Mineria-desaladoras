@@ -2,5 +2,12 @@ node_modules/
 dist/
 .env
 .env.*
+!.env.example
 *.log
 .DS_Store
+
+# Backend (Python)
+backend/venv/
+backend/.venv/
+__pycache__/
+*.pyc
