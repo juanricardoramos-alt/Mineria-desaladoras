@@ -686,6 +686,7 @@ body {
   }
 
   .search-field {
+    flex: 1 1 auto;
     max-width: none;
   }
 
@@ -751,17 +752,18 @@ body {
 
 .projects-table th {
   text-align: left;
-  padding: 10px 20px;
+  padding: 10px 14px;
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-muted);
   border-bottom: 1px solid var(--hairline);
+  white-space: normal;
 }
 
 .projects-table td {
-  padding: 14px 20px;
+  padding: 14px 14px;
   border-bottom: 1px solid var(--hairline);
   vertical-align: top;
 }
@@ -787,9 +789,25 @@ body {
   color: var(--text-secondary);
 }
 
+.cell-budget {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.project-budget {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
 .cell-action {
   text-align: right;
   white-space: nowrap;
+}
+
+.project-card-budget {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
 /* ---------- Badges ---------- */

@@ -1,6 +1,13 @@
 import { StatusBadge, PhaseBadge } from './badges.jsx'
 import EmptyState from './EmptyState.jsx'
 
+const formatBudget = new Intl.NumberFormat('es-CL')
+
+function formatPresupuesto(presupuesto) {
+  if (presupuesto === null || presupuesto === undefined) return '—'
+  return `US$ ${formatBudget.format(presupuesto)} M`
+}
+
 export default function ProjectsTable({ projects, onSelect, onClearFilters }) {
   if (projects.length === 0) {
     return (
@@ -26,10 +33,14 @@ export default function ProjectsTable({ projects, onSelect, onClearFilters }) {
         <table className="projects-table">
           <thead>
             <tr>
-              <th scope="col">Proyecto</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Empresa</th>
               <th scope="col">Ubicación</th>
               <th scope="col">Fase</th>
               <th scope="col">Estado</th>
+              <th scope="col" className="cell-budget">
+                Presupuesto (millones USD)
+              </th>
               <th scope="col">
                 <span className="visually-hidden">Acciones</span>
               </th>
@@ -38,16 +49,17 @@ export default function ProjectsTable({ projects, onSelect, onClearFilters }) {
           <tbody>
             {projects.map((project) => (
               <tr key={project.id}>
-                <td>
-                  <div className="project-name">{project.nombre}</div>
-                  <div className="project-company">{project.empresa}</div>
-                </td>
+                <td className="project-name">{project.nombre}</td>
+                <td className="project-company">{project.empresa}</td>
                 <td className="project-location">{project.ubicacion}</td>
                 <td>
                   <PhaseBadge fase={project.fase} />
                 </td>
                 <td>
                   <StatusBadge estado={project.estado} />
+                </td>
+                <td className="cell-budget project-budget">
+                  {formatPresupuesto(project.presupuesto)}
                 </td>
                 <td className="cell-action">
                   <button
@@ -76,6 +88,9 @@ export default function ProjectsTable({ projects, onSelect, onClearFilters }) {
               <StatusBadge estado={project.estado} />
             </div>
             <div className="project-location">{project.ubicacion}</div>
+            <div className="project-card-budget">
+              {formatPresupuesto(project.presupuesto)}
+            </div>
             <div className="project-card-bottom">
               <PhaseBadge fase={project.fase} />
               <button
