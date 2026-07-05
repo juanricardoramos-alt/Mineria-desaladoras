@@ -1,10 +1,22 @@
 import { FASES } from '../data/projects.js'
 
-const SECTOR_CLASSNAME = {
-  Minería: 'sector--mineria',
-  Industria: 'sector--industria',
-  Energía: 'sector--energia',
-  Agua: 'sector--agua',
+// El estado siempre se comunica con ícono + texto, nunca solo con color.
+const ESTADO_CONFIG = {
+  'En progreso': { className: 'status--progress', icon: '●' },
+  Pausado: { className: 'status--paused', icon: '⏸' },
+  Completado: { className: 'status--done', icon: '✓' },
+}
+
+export function StatusBadge({ estado }) {
+  const config = ESTADO_CONFIG[estado] ?? { className: '', icon: '○' }
+  return (
+    <span className={`status-badge ${config.className}`}>
+      <span className="status-icon" aria-hidden="true">
+        {config.icon}
+      </span>
+      {estado}
+    </span>
+  )
 }
 
 export function PhaseBadge({ fase }) {
@@ -20,16 +32,6 @@ export function PhaseBadge({ fase }) {
         ))}
       </span>
       {fase}
-    </span>
-  )
-}
-
-export function SectorBadge({ sector }) {
-  const className = SECTOR_CLASSNAME[sector] ?? ''
-  return (
-    <span className={`sector-badge ${className}`}>
-      <span className="sector-dot" aria-hidden="true" />
-      {sector}
     </span>
   )
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { SectorBadge, PhaseBadge } from './badges.jsx'
+import { StatusBadge, PhaseBadge } from './badges.jsx'
 
 const formatNumber = new Intl.NumberFormat('es-CL')
 const formatDate = new Intl.DateTimeFormat('es-CL', { dateStyle: 'long' })
@@ -58,7 +58,7 @@ export default function ProjectDetailModal({ project, onClose }) {
 
         <div className="modal-badges">
           <PhaseBadge fase={project.fase} />
-          <SectorBadge sector={project.sector} />
+          <StatusBadge estado={project.estado} />
         </div>
 
         <dl className="modal-facts">
@@ -80,22 +80,6 @@ export default function ProjectDetailModal({ project, onClose }) {
           <div className="modal-description">
             <h4>Descripción</h4>
             <p>{project.descripcion}</p>
-          </div>
-        )}
-
-        {project.contactos?.length > 0 && (
-          <div className="modal-contacts">
-            <h4>Contactos clave sugeridos</h4>
-            <ul className="modal-contact-list">
-              {project.contactos.map((contacto) => (
-                <li className="modal-contact-item" key={contacto.cargo}>
-                  <span className="modal-contact-cargo">{contacto.cargo}</span>
-                  <span className="modal-contact-solucion">
-                    Ofrecer: {contacto.solucionAqualia}
-                  </span>
-                </li>
-              ))}
-            </ul>
           </div>
         )}
       </div>

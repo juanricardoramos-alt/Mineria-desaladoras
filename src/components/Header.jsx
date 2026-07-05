@@ -1,19 +1,13 @@
-import { NavLink } from 'react-router-dom'
-
-function navClass({ isActive }) {
-  return `nav-item ${isActive ? 'nav-item--active' : ''}`
-}
-
 export default function Header() {
   return (
     <header className="header">
       <div className="container header-inner">
-        <NavLink className="brand" to="/">
+        <a className="brand" href="/">
           <svg
             className="brand-logo"
             viewBox="0 0 32 32"
             role="img"
-            aria-label="Logo AQUALIA"
+            aria-label="Logo ARCAN"
           >
             <path
               d="M16 3c5.2 6.6 9 11.6 9 16.2C25 24.9 21 29 16 29S7 24.9 7 19.2C7 14.6 10.8 9.6 16 3Z"
@@ -28,20 +22,18 @@ export default function Header() {
             />
           </svg>
           <span className="brand-text">
-            <strong>AQUALIA</strong>
-            <span className="brand-sub">Prospección Comercial</span>
+            <strong>ARCAN</strong>
+            <span className="brand-sub">Catastro de Desaladoras</span>
           </span>
-        </NavLink>
+        </a>
         <nav className="header-nav" aria-label="Navegación principal">
-          <NavLink className={navClass} to="/" end>
-            Proyectos
-          </NavLink>
-          <NavLink className={navClass} to="/contactos">
-            Contactos Clave
-          </NavLink>
-          <NavLink className={navClass} to="/exportar">
-            Exportar
-          </NavLink>
+          <span className="nav-item nav-item--active">Proyectos</span>
+          <span className="nav-item nav-item--disabled" title="Próximamente">
+            Mapa
+          </span>
+          <span className="nav-item nav-item--disabled" title="Próximamente">
+            Reportes
+          </span>
         </nav>
       </div>
     </header>

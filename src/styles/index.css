@@ -10,6 +10,10 @@
   --accent: #2a78d6;
   --accent-strong: #1c5cab;
   --accent-wash: rgba(42, 120, 214, 0.1);
+  --status-done: #006300;
+  --status-done-wash: rgba(12, 163, 12, 0.12);
+  --status-paused: #8a5a00;
+  --status-paused-wash: rgba(250, 178, 25, 0.16);
   --shadow: 0 1px 2px rgba(11, 11, 11, 0.05), 0 8px 24px rgba(11, 11, 11, 0.06);
 
   /* Rampa ordinal (una tonalidad, más oscura = fase más avanzada) */
@@ -18,11 +22,10 @@
   --phase-3: #256abf;
   --phase-4: #104281;
 
-  /* Paleta categórica por sector (orden fijo, no cíclico) */
-  --sector-mineria: #2a78d6;
-  --sector-industria: #1baf7a;
-  --sector-energia: #eda100;
-  --sector-agua: #008300;
+  /* Colores de estado fijos para marcas (gráfico de dona) */
+  --chart-progress: var(--accent);
+  --chart-warning: #fab219;
+  --chart-good: #0ca30c;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -37,17 +40,16 @@
     --accent: #3987e5;
     --accent-strong: #6da7ec;
     --accent-wash: rgba(57, 135, 229, 0.18);
+    --status-done: #0ca30c;
+    --status-done-wash: rgba(12, 163, 12, 0.16);
+    --status-paused: #fab219;
+    --status-paused-wash: rgba(250, 178, 25, 0.14);
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.45);
 
     --phase-1: #184f95;
     --phase-2: #256abf;
     --phase-3: #5598e7;
     --phase-4: #9ec5f4;
-
-    --sector-mineria: #3987e5;
-    --sector-industria: #199e70;
-    --sector-energia: #c98500;
-    --sector-agua: #008300;
   }
 }
 
@@ -146,19 +148,17 @@ body {
   border-radius: 8px;
   font-size: 14px;
   color: var(--text-secondary);
-  text-decoration: none;
-  transition: background 0.15s ease, color 0.15s ease;
-}
-
-.nav-item:hover {
-  background: var(--accent-wash);
-  color: var(--accent-strong);
 }
 
 .nav-item--active {
   background: var(--accent-wash);
   color: var(--accent-strong);
   font-weight: 600;
+}
+
+.nav-item--disabled {
+  color: var(--text-muted);
+  cursor: default;
 }
 
 /* ---------- Intro ---------- */
@@ -211,6 +211,33 @@ body {
   font-size: 15px;
   font-weight: 400;
   color: var(--text-muted);
+}
+
+/* ---------- Estados de carga / error de la API ---------- */
+.status-panel {
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 24px;
+  margin: 20px 0;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.status-panel--error {
+  border-color: rgba(208, 59, 59, 0.35);
+}
+
+.status-panel-title {
+  margin: 0 0 6px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.status-panel-hint {
+  margin: 0 0 16px;
+  font-size: 13px;
 }
 
 /* ---------- Filtros ---------- */
@@ -366,26 +393,6 @@ body {
 .chip-icon {
   font-size: 10px;
   line-height: 1;
-}
-
-.chip-sector-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.chip-sector-dot.sector--mineria {
-  background: var(--sector-mineria);
-}
-.chip-sector-dot.sector--industria {
-  background: var(--sector-industria);
-}
-.chip-sector-dot.sector--energia {
-  background: var(--sector-energia);
-}
-.chip-sector-dot.sector--agua {
-  background: var(--sector-agua);
 }
 
 .filters-summary {
@@ -585,17 +592,14 @@ body {
   pointer-events: none;
 }
 
-.donut-fill-mineria {
-  stroke: var(--sector-mineria);
+.estado-fill-progreso {
+  stroke: var(--chart-progress);
 }
-.donut-fill-industria {
-  stroke: var(--sector-industria);
+.estado-fill-pausado {
+  stroke: var(--chart-warning);
 }
-.donut-fill-energia {
-  stroke: var(--sector-energia);
-}
-.donut-fill-agua {
-  stroke: var(--sector-agua);
+.estado-fill-completado {
+  stroke: var(--chart-good);
 }
 
 .donut-total {
@@ -638,26 +642,25 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 14px;
-  height: 14px;
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
+  font-size: 9px;
+  color: #fff;
   flex-shrink: 0;
 }
 
-.legend-dot.donut-fill-mineria {
-  background: var(--sector-mineria);
+.legend-dot.estado-fill-progreso {
+  background: var(--chart-progress);
   stroke: none;
 }
-.legend-dot.donut-fill-industria {
-  background: var(--sector-industria);
+.legend-dot.estado-fill-pausado {
+  background: var(--chart-warning);
   stroke: none;
+  color: #3a2900;
 }
-.legend-dot.donut-fill-energia {
-  background: var(--sector-energia);
-  stroke: none;
-}
-.legend-dot.donut-fill-agua {
-  background: var(--sector-agua);
+.legend-dot.estado-fill-completado {
+  background: var(--chart-good);
   stroke: none;
 }
 
@@ -693,7 +696,7 @@ body {
   }
 }
 
-/* ---------- Sin resultados ---------- */
+/* ---------- Estado vacío ---------- */
 .empty-state {
   padding: 48px 24px;
   text-align: center;
@@ -808,7 +811,7 @@ body {
 }
 
 /* ---------- Badges ---------- */
-.sector-badge {
+.status-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -817,29 +820,26 @@ body {
   font-size: 13px;
   font-weight: 500;
   white-space: nowrap;
-  background: var(--page);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
 }
 
-.sector-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
+.status-icon {
+  font-size: 11px;
+  line-height: 1;
 }
 
-.sector--mineria .sector-dot {
-  background: var(--sector-mineria);
+.status--progress {
+  background: var(--accent-wash);
+  color: var(--accent-strong);
 }
-.sector--industria .sector-dot {
-  background: var(--sector-industria);
+
+.status--paused {
+  background: var(--status-paused-wash);
+  color: var(--status-paused);
 }
-.sector--energia .sector-dot {
-  background: var(--sector-energia);
-}
-.sector--agua .sector-dot {
-  background: var(--sector-agua);
+
+.status--done {
+  background: var(--status-done-wash);
+  color: var(--status-done);
 }
 
 .phase-badge {
@@ -932,10 +932,6 @@ body {
     display: none;
   }
 
-  .table-wrapper--scroll {
-    display: block;
-  }
-
   .project-cards {
     display: block;
   }
@@ -952,25 +948,8 @@ body {
     font-size: 22px;
   }
 
-  .header-inner {
-    height: auto;
-    min-height: 56px;
-    padding: 8px 0;
-    flex-wrap: wrap;
-    row-gap: 8px;
-  }
-
-  .brand-sub {
-    display: none;
-  }
-
   .header-nav {
-    gap: 2px;
-  }
-
-  .nav-item {
-    padding: 5px 8px;
-    font-size: 13px;
+    display: none;
   }
 }
 
@@ -1093,206 +1072,10 @@ body {
   color: var(--text-secondary);
 }
 
-.modal-contacts h4 {
-  margin: 16px 0 8px;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-}
-
-.modal-contact-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.modal-contact-item {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 10px 12px;
-  border: 1px solid var(--hairline);
-  border-radius: 8px;
-}
-
-.modal-contact-cargo {
-  font-weight: 600;
-  font-size: 13px;
-}
-
-.modal-contact-solucion {
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
 @media (max-width: 479px) {
   .modal-facts {
     grid-template-columns: 1fr;
   }
-}
-
-/* ---------- Exportar ---------- */
-.export-panel {
-  background: var(--surface-1);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  margin: 20px 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.export-panel-count {
-  margin: 0 0 4px;
-  font-size: 15px;
-}
-
-.export-panel-hint {
-  margin: 0;
-  font-size: 13px;
-  color: var(--text-secondary);
-  max-width: 560px;
-}
-
-.btn-export {
-  appearance: none;
-  border: none;
-  background: var(--accent);
-  color: #fff;
-  font: inherit;
-  font-size: 14px;
-  font-weight: 600;
-  padding: 12px 22px;
-  border-radius: 10px;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s ease;
-}
-
-.btn-export:hover {
-  background: var(--accent-strong);
-}
-
-.btn-export:focus-visible {
-  outline: 2px solid var(--accent-strong);
-  outline-offset: 2px;
-}
-
-.export-confirmation {
-  margin: -8px 0 20px;
-  font-size: 13px;
-  color: var(--accent-strong);
-}
-
-.export-cell {
-  color: var(--text-secondary);
-}
-
-.export-cell--wide {
-  max-width: 320px;
-  overflow-wrap: anywhere;
-}
-
-/* ---------- Contactos clave ---------- */
-.contact-project-list {
-  list-style: none;
-  margin: 20px 0 40px;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.contact-project-card {
-  background: var(--surface-1);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-}
-
-.contact-project-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
-  padding-bottom: 16px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid var(--hairline);
-}
-
-.contact-project-name {
-  margin: 0 0 2px;
-  font-size: 17px;
-}
-
-.contact-project-company {
-  margin: 0;
-  color: var(--text-secondary);
-  font-size: 14px;
-}
-
-.contact-project-badges {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.contact-rows {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 14px;
-}
-
-.contact-row {
-  border: 1px solid var(--hairline);
-  border-radius: 10px;
-  padding: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.contact-row-cargo {
-  font-weight: 600;
-  font-size: 14px;
-}
-
-.contact-row-razon {
-  margin: 0;
-  font-size: 13px;
-  color: var(--text-secondary);
-  flex: 1;
-}
-
-.contact-row-solucion {
-  margin: 0;
-  font-size: 13px;
-  padding: 8px 10px;
-  background: var(--accent-wash);
-  color: var(--accent-strong);
-  border-radius: 8px;
-}
-
-.contact-row-solucion-label {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 3px;
-  opacity: 0.75;
 }
 
 /* ---------- Footer ---------- */
