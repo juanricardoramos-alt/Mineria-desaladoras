@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FASES } from '../../data/projects.js'
+import { FASES } from '../../projectsData.js'
 import ChartCard from './ChartCard.jsx'
 
 const WIDTH = 480

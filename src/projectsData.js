@@ -1,12 +1,11 @@
-// Catastro de ejemplo (sin backend): mismos proyectos usados para poblar
-// la base de datos en backend/seed_data.py, con datos realistas de
-// desaladoras vinculadas a la minería chilena.
+// Catastro de ejemplo (sin backend): 7 proyectos de desaladoras en Chile,
+// usados directamente por el frontend sin ninguna llamada a API.
 
 export const FASES = ['Exploración', 'Desarrollo', 'Construcción', 'Operativo']
 
 export const ESTADOS = ['En progreso', 'Pausado', 'Completado']
 
-export const PROJECTS = [
+export const projects = [
   {
     id: 1,
     nombre: 'Desaladora Puerto Coloso',

@@ -1,4 +1,4 @@
-import { FASES, ESTADOS } from '../data/projects.js'
+import { FASES, ESTADOS } from '../projectsData.js'
 
 const ESTADO_ICON = {
   'En progreso': '●',

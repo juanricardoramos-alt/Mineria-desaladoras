@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ESTADOS } from '../../data/projects.js'
+import { ESTADOS } from '../../projectsData.js'
 import ChartCard from './ChartCard.jsx'
 
 const SIZE = 240

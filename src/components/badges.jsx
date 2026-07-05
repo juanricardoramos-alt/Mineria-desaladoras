@@ -1,4 +1,4 @@
-import { FASES } from '../data/projects.js'
+import { FASES } from '../projectsData.js'
 
 // El estado siempre se comunica con ícono + texto, nunca solo con color.
 const ESTADO_CONFIG = {

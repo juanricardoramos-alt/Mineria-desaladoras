@@ -35,7 +35,7 @@ npm run dev      # http://localhost:5173
 ```
 
 Abre `http://localhost:5173`: el dashboard carga los 7 proyectos de
-ejemplo definidos en `src/data/projects.js`, sin necesidad de backend ni
+ejemplo definidos en `src/projectsData.js`, sin necesidad de backend ni
 base de datos.
 
 ## Estructura
@@ -50,9 +50,10 @@ backend/                    # backend de referencia (FastAPI), no conectado al f
   requirements.txt
 
 src/
-  data/projects.js          # proyectos de ejemplo + constantes de fase/estado
+  projectsData.js           # proyectos de ejemplo + constantes de fase/estado
   components/
     Header.jsx              # barra superior con logo y navegación
+    Projects.jsx            # página de Proyectos: búsqueda, filtros, gráficos y tabla
     FiltersBar.jsx           # búsqueda + filtros por fase/estado
     StatTiles.jsx           # indicadores resumen
     ProjectsTable.jsx       # tabla (escritorio) y tarjetas (móvil)
